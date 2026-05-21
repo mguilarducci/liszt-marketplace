@@ -4,5 +4,11 @@
     "name": "mguilarducci",
     "email": "mguilarducci@gmail.com"
   },
-  "plugins": []
+  "plugins": [
+    {
+      "name": "insurance",
+      "source": "./plugins/insurance",
+      "description": "Insurance plugin for Claude Code"
+    }
+  ]
 }

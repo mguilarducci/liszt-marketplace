@@ -1,0 +1,11 @@
+{
+  "name": "insurance",
+  "version": "0.1.0",
+  "description": "Insurance plugin for Claude Code",
+  "author": {
+    "name": "mguilarducci",
+    "email": "mguilarducci@gmail.com"
+  },
+  "license": "MIT",
+  "keywords": ["insurance"]
+}
