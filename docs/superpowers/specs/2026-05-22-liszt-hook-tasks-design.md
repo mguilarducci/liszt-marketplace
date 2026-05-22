@@ -42,6 +42,7 @@ Task names are `<language>-<hook>`:
 run = [
   "gleam format --check src test",
   "gleam check",
+  "gleam build --warnings-as-errors",
 ]
 fail_hint = "run `gleam format src test` to fix formatting"
 enabled = true
