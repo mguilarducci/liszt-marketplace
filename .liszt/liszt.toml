@@ -1,0 +1,9 @@
+# liszt linters config
+# Each [linters.<name>] declares one linter.
+#   cmd     = shell command to run
+#   enabled = true|false (optional, defaults to true)
+# linter.sh runs them in order, fail-fast.
+
+[linters.gleam]
+cmd = "gleam format --check src test"
+enabled = true
