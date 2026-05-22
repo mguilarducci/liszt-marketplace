@@ -1,1 +1,21 @@
-{}
+{
+  "go": {
+    "command": "gopls",
+    "extensionToLanguage": {
+      ".go": "go"
+    },
+    "restartOnCrash": true,
+    "maxRestarts": 5,
+    "startupTimeout": 10000
+  },
+  "gleam": {
+    "command": "gleam",
+    "args": ["lsp"],
+    "extensionToLanguage": {
+      ".gleam": "gleam"
+    },
+    "restartOnCrash": true,
+    "maxRestarts": 5,
+    "startupTimeout": 10000
+  }
+}
