@@ -1,9 +1,9 @@
-# liszt linters config
-# Each [linters.<name>] declares one linter.
+# liszt pre-commit config
+# Each [pre-commit.<name>] declares one check.
 #   cmd     = shell command to run
 #   enabled = true|false (optional, defaults to true)
-# linter.sh runs them in order, fail-fast.
+# pre-commit.sh runs them in order, fail-fast.
 
-[linters.gleam]
+[pre-commit.gleam]
 cmd = "gleam format --check src test"
 enabled = true

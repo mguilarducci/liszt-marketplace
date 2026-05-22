@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 #
-# linter.sh - run linters declared in .liszt/liszt.toml
+# pre-commit.sh - run pre-commit checks declared in .liszt/liszt.toml
 #
-# Reads a TOML file with one table per linter:
+# Reads a TOML file with one table per check:
 #
-#   [linters.<name>]
+#   [pre-commit.<name>]
 #   cmd = "shell command to run"
 #   enabled = true   # optional, defaults to true
 #
-# Runs each enabled linter in file order. Fail-fast: the first linter that
+# Runs each enabled check in file order. Fail-fast: the first check that
 # exits non-zero aborts the run with that exit code.
 #
-# Usage: linter.sh [path/to/liszt.toml]   (default: .liszt/liszt.toml)
+# Usage: pre-commit.sh [path/to/liszt.toml]   (default: .liszt/liszt.toml)
 #
-# Note: pure-bash TOML parsing. Handles flat [linters.NAME] tables with
+# Note: pure-bash TOML parsing. Handles flat [pre-commit.NAME] tables with
 # `cmd` and `enabled` keys only. Not a general TOML parser.
 
 set -u
@@ -47,7 +47,7 @@ while IFS= read -r line || [[ -n "$line" ]]; do
   trimmed="${line#"${line%%[![:space:]]*}"}"
   [[ -z "$trimmed" || "$trimmed" == \#* ]] && continue
 
-  if [[ "$trimmed" =~ ^\[linters\.([A-Za-z0-9_-]+)\][[:space:]]*$ ]]; then
+  if [[ "$trimmed" =~ ^\[pre-commit\.([A-Za-z0-9_-]+)\][[:space:]]*$ ]]; then
     current="${BASH_REMATCH[1]}"
     names+=("$current")
     cmds+=("")
@@ -69,7 +69,7 @@ while IFS= read -r line || [[ -n "$line" ]]; do
 done < "$TOML_PATH"
 
 if [[ ${#names[@]} -eq 0 ]]; then
-  echo "no linters defined in $TOML_PATH"
+  echo "no pre-commit checks defined in $TOML_PATH"
   exit 0
 fi
 
@@ -81,7 +81,7 @@ for i in "${!names[@]}"; do
   [[ "$en" != "true" ]] && continue
 
   if [[ -z "$cmd" ]]; then
-    echo "warn: linter '$name' has no cmd, skipping" >&2
+    echo "warn: check '$name' has no cmd, skipping" >&2
     continue
   fi
 
@@ -89,9 +89,9 @@ for i in "${!names[@]}"; do
   bash -c "$cmd"
   rc=$?
   if [[ $rc -ne 0 ]]; then
-    echo "✗ linter '$name' failed (exit $rc)" >&2
+    echo "✗ check '$name' failed (exit $rc)" >&2
     exit "$rc"
   fi
 done
 
-echo "✓ all linters passed"
+echo "✓ all pre-commit checks passed"
