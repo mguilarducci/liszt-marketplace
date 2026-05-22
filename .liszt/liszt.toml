@@ -1,9 +1,29 @@
-# liszt pre-commit config
-# Each [pre-commit.<name>] declares one check.
-#   cmd     = shell command to run
-#   enabled = true|false (optional, defaults to true)
-# pre-commit.sh runs them in order, fail-fast.
+# liszt task config — git hook commands per language.
+# Run via `liszt run <name>` (e.g. liszt run gleam-pre-commit).
+#   run       = array of shell commands (in order; all run, first failure's exit code wins)
+#   fail_hint = message printed if a command fails (optional)
+#   enabled   = true|false (optional, default true)
 
-[pre-commit.gleam]
-cmd = "gleam format --check src test"
+[tasks.gleam-pre-commit]
+run = [
+  "gleam format --check src test",
+  "gleam check",
+]
+fail_hint = "run `gleam format src test` to fix formatting"
+enabled = true
+
+[tasks.gleam-pre-push]
+run = ["gleam test"]
+enabled = true
+
+[tasks.golang-pre-commit]
+run = [
+  'test -z "$(gofmt -l .)"',
+  "go vet ./...",
+]
+fail_hint = "run `gofmt -w .` to fix formatting"
+enabled = true
+
+[tasks.golang-pre-push]
+run = ["go test -race ./..."]
 enabled = true
